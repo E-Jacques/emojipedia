@@ -1,0 +1,37 @@
+[
+    {
+        "id": 0,
+        "emote": "#️⃣",
+        "keywords": ["hash", "tile", "hashtag"]
+    },
+    {
+        "id": 1,
+        "emote": "😃",
+        "keywords": ["smiley", "happy", "sourire", ":)"]
+    },
+    {
+        "id": 2,
+        "emote": "❤️",
+        "keywords": ["heart", "<3", "amour", "coeur"]
+    },
+    {
+        "id": 3,
+        "emote": "👍",
+        "keywords": ["+1", "plus", "thumbs up", "thumbs", "pouce"]
+    },
+    {
+        "id": 4,
+        "emote": "😁",
+        "keywords": ["rire", "smiley", ":D"]
+    },
+    {
+        "id": 5,
+        "emote": "😂",
+        "keywords": ["rire", "mdrrrrrr", "lol", "fun", "joy", "joie"]
+    },
+    {
+        "id": 6,
+        "emote": "🤣",
+        "keywords": ["rofl", "roule de rire", "ta mère cette pute", "salope", "chien"]
+    }
+]
