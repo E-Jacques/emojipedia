@@ -5,12 +5,12 @@ from emote import Emote
 from os import chdir
 import json
 
-chdir("/home/emilien/Documents/Dev/Projet/emojipedia")
 
 class MainFrame(Frame):
-    def __init__(self, master: Tk):
+    def __init__(self, master: Tk, work_dir: str = "."):
         super().__init__(master)
         super().grid(row=0, column=0, sticky="we")
+        chdir(work_dir)
         master.bind("<Key>", self.moveArrow)
         self.master = master
         self.query: str = ""
