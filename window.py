@@ -16,6 +16,7 @@ class MainFrame(Frame):
         self.query: str = ""
         self.input = Entry(master)
         self.emotes: list[Emote] = []
+        self.emoteLabels: list[Label] = []
         self.emoteFrame = Frame(master)
         self.emoteFrameColNum = 6
         self.selected: list[int, int] = [-1, -1]
@@ -40,6 +41,18 @@ class MainFrame(Frame):
 
     def moveArrow(self, ev: Event):
         maxLen = len(self.getFilteredEmotes(self.query)) if self.query != "" else len(self.lastUsed)
+
+        # On retire le bg
+        idx = self.selected[1] * self.emoteFrameColNum + self.selected[0]
+        if ev.keysym in ["Down", "Up", "Right", "Left"] and len(self.emoteLabels) > idx >= 0:
+            emotes = [self.getEmoteById(id) for id in self.lastUsed]
+            if self.query != "":
+                emotes = self.getFilteredEmotes(self.query)
+            l = self.emoteLabels[idx]
+            self.emoteLabels[idx] = emotes[idx].getLabel(self.emoteFrame, fz=16)
+            self.emoteLabels[idx].grid(row=self.selected[1] , column=self.selected[0] , padx=5, pady=5)
+            l.destroy()
+
         if ev.keysym == "Down":
             self.selected[0] = max(0, self.selected[0])
             if (self.selected[1] + 1) * self.emoteFrameColNum  + self.selected[0] < maxLen:
@@ -77,8 +90,8 @@ class MainFrame(Frame):
             self.input.insert(len(self.input.get()), ev.char)
             self.input.focus()
 
-        if ev.keysym in ["Down", "Up", "Right", "Left", "Return", "KP_Enter"]:
-            self.displayEmotes()    
+        if ev.keysym in ["Down", "Up", "Right", "Left"]:
+            self.emoteLabels[self.selected[1] * self.emoteFrameColNum + self.selected[0]].config(bg="lightblue")
 
     def writeEmote(self, emote: Emote):
         if (self.lastUsed.count(emote.id) > 0):
@@ -127,14 +140,15 @@ class MainFrame(Frame):
         for widget in self.emoteFrame.winfo_children():
             widget.destroy()
 
+        self.emoteLabels = []
         emotes = [self.getEmoteById(id) for id in self.lastUsed]
         if value != "":
             emotes = self.getFilteredEmotes(value)
 
         for idx, emote in enumerate(emotes):
+            if emote == None:
+                continue
             emoteLabel = emote.getLabel(self.emoteFrame, fz=16)
-            if self.selected[0] == idx%self.emoteFrameColNum  and self.selected[1] == idx//self.emoteFrameColNum :
-                emoteLabel.config(bg="lightblue")
-
             emoteLabel.grid(row=idx//self.emoteFrameColNum , column=idx%self.emoteFrameColNum , padx=5, pady=5)
+            self.emoteLabels.append(emoteLabel)
             
